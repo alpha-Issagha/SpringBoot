@@ -19,7 +19,7 @@ public class StudentConfig {
         return args -> {
            Student mariam =  new Student(
                     1L,
-                    "Mariam",
+                    "Mariamm",
                     "mariam.jamal@gmail.com",
                     LocalDate.of(2000, JANUARY,5)
            );
