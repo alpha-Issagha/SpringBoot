@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: my_postgres_db
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: student
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - backend-network
+
+  backend:
+    build: .
+    container_name: my_spring_backend
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://my_postgres_db:5432/student
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: password
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    networks:
+      - backend-network
+
+  frontend:
+    build:
+      context: ../student
+      dockerfile: Dockerfile
+    container_name: my_angular_frontend
+    ports:
+      - "8081:80"
+    networks:
+      - backend-network
+
+volumes:
+  postgres_data:
+
+networks:
+  backend-network:
+    name: my_app_network

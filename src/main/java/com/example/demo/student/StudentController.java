@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "api/v1/student")
+@RequestMapping(path = "/")
 public class StudentController {
     private final StudentService studentService;
 
@@ -15,22 +15,22 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @GetMapping(path = "/all")
+    @GetMapping(path = "/student/all")
     public List<Student> getStudents() {
         return studentService.getStudents();
     }
 
-    @PostMapping(path = "/add")
+    @PostMapping(path = "/student/add")
     public void registerNewStudent (@RequestBody Student student){
         studentService.addNewStudent(student);
     }
 
-    @DeleteMapping(path = "/delete/{studentId}")
+    @DeleteMapping(path = "/student/delete/{studentId}")
     public void deleteStudent (@PathVariable("studentId") Long studentId){
         studentService.deleteStudent(studentId);
     }
 
-    @PutMapping(path = "/update")
+    @PutMapping(path = "/student/update")
     public void updateStudent (@RequestBody Student student){
         studentService.updateStudent(student);
     }
