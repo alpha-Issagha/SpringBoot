@@ -1,8 +1,8 @@
 pipeline {
-  agent {
-    docker {
-      image 'maven:3.9.5-openjdk-21'  // Utiliser une image Docker Maven
-      args '-v /root/.m2:/root/.m2'  // Optionnel: monter le cache Maven
+  agent any{
+    tools {
+      jdk 'OpenJDK21'  // Utiliser une image Docker Maven
+      maven 'Maven3'  // Optionnel: monter le cache Maven
     }
   }
 
@@ -48,11 +48,20 @@ pipeline {
         echo 'Démarrage de la création des images Docker...'
         
         // Construire l'image Docker pour le backend
-        sh 'docker build -t backend-image -f Dockerfile-backend .'
+        script { 
+          withDockerRegistry(credentialsId: '04e4c6b1-c508-47c3-8671-5301de49e5be'){
+                 sh 'docker build -t backend-image -f Dockerfile-backend .'
+              }
+        }
         
         // Construire l'image Docker pour le frontend
         dir('frontend') {
-          sh 'docker build -t frontend-image -f Dockerfile-frontend .'
+          script { 
+              withDockerRegistry(credentialsId: '04e4c6b1-c508-47c3-8671-5301de49e5be'){
+                 sh 'docker build -t frontend-image -f Dockerfile-frontend .'
+              }
+          }
+          
         }
 
         echo 'Images Docker créées avec succès.'
@@ -64,8 +73,14 @@ pipeline {
         echo 'Démarrage du déploiement des images Docker...'
         
         // Déplacer le fichier docker-compose.yml depuis le dépôt backend
-        sh 'cp docker-compose.yml ../'
         
+        script { 
+              withDockerRegistry(credentialsId: '04e4c6b1-c508-47c3-8671-5301de49e5be'){
+                  sh 'cp docker-compose.yml ../'
+                  sh 'docker-compose up -d'
+                  sh 'docker push'
+              }
+          }
         // Lancer les services avec Docker Compose
         sh 'docker-compose up -d'
         
