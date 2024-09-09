@@ -29,7 +29,7 @@ services:
 
   frontend:
     build:
-      context: ../student
+      context: ./student
       dockerfile: Dockerfile
     container_name: my_angular_frontend
     ports:

@@ -19,13 +19,13 @@ public class StudentConfig {
         return args -> {
            Student mariam =  new Student(
                     1L,
-                    "Mariamm",
-                    "mariam.jamal@gmail.com",
+                    "Alpha Issagha",
+                    "alpha.jamal@gmail.com",
                     LocalDate.of(2000, JANUARY,5)
            );
             Student alpha = new Student(
-                    "Alpha",
-                    "alpha@gmail.com",
+                    "Mamadou Dian",
+                    "mamadou@gmail.com",
                     LocalDate.of(1997, JANUARY,18)
             );
             repository.saveAll(
