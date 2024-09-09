@@ -1,10 +1,10 @@
 pipeline {
-  agent any{
+  agent any
     tools {
       jdk 'OpenJDK21'  // Utiliser une image Docker Maven
       maven 'Maven3'  // Optionnel: monter le cache Maven
     }
-  }
+  
 
   stages {
     stage('Cloner Backend') {
