@@ -3,7 +3,7 @@ pipeline {
     tools {
       jdk 'OpenJDK21'  // Utiliser une image Docker Maven
       maven 'Maven3'  // Optionnel: monter le cache Maven
-      npm 'node22'
+      nodejs 'node22'
     }
   
 
