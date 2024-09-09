@@ -20,16 +20,33 @@ pipeline {
             }
         }
 
-        stage('Build and Deploy with Docker Compose') {
+stage('Build Docker Images') {
             steps {
-                echo 'Démarrage de la création des images Docker et du déploiement...'
+                echo 'Démarrage de la construction des images Docker...'
 
-                withDockerRegistry(credentialsId: '04e4c6b1-c508-47c3-8671-5301de49e5be') {
-                        // some block
-                    sh 'docker compose -f docker-compose.yml up --build -d'
+                // Utilisation de Docker Compose pour build les images
+                script {
+                    withDockerRegistry(credentialsId: '04e4c6b1-c508-47c3-8671-5301de49e5be') {
+                        sh 'docker compose -f docker-compose.yml build'
+                    }
                 }
                 
-                echo 'Déploiement terminé avec succès.'
+                echo 'Images Docker construites avec succès.'
+            }
+        }
+
+        stage('Push Docker Images') {
+            steps {
+                echo 'Démarrage du push des images Docker...'
+
+                // Utilisation de Docker Compose pour pousser les images vers Docker Hub
+                script {
+                    withDockerRegistry(credentialsId: '04e4c6b1-c508-47c3-8671-5301de49e5be') {
+                        sh 'docker compose -f docker-compose.yml push'
+                    }
+                }
+
+                echo 'Images Docker poussées avec succès.'
             }
         }
     }
