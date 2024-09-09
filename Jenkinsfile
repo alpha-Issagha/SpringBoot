@@ -27,7 +27,8 @@ stage('Build Docker Images') {
                 // Utilisation de Docker Compose pour build les images
                 script {
                     withDockerRegistry(credentialsId: '04e4c6b1-c508-47c3-8671-5301de49e5be') {
-                        sh 'docker build -t alphascopic/myapp:tag12 .'
+                        sh 'docker build -t alphascopic/myapp:backend .'
+                        sh 'docker build -t alphascopic/myapp:frontend ./frontend'
                     }
                 }
                 
@@ -42,7 +43,8 @@ stage('Build Docker Images') {
                 // Utilisation de Docker Compose pour pousser les images vers Docker Hub
                 script {
                     withDockerRegistry(credentialsId: '04e4c6b1-c508-47c3-8671-5301de49e5be') {
-                        sh 'docker push alphascopic/myapp:tag12'
+                        sh 'docker push alphascopic/myapp:backend'
+                        sh 'docker push alphascopic/myapp:frontend'
                     }
                 }
 
