@@ -23,9 +23,11 @@ pipeline {
         stage('Build and Deploy with Docker Compose') {
             steps {
                 echo 'Démarrage de la création des images Docker et du déploiement...'
-                
-                // Utilisation de Docker Compose pour build et deploy
-                sh 'docker compose -f docker-compose.yml up --build -d'
+
+                withDockerRegistry(credentialsId: '04e4c6b1-c508-47c3-8671-5301de49e5be') {
+                        // some block
+                    sh 'docker compose -f docker-compose.yml up --build -d'
+                }
                 
                 echo 'Déploiement terminé avec succès.'
             }
