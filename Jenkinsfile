@@ -27,7 +27,7 @@ stage('Build Docker Images') {
                 // Utilisation de Docker Compose pour build les images
                 script {
                     withDockerRegistry(credentialsId: '04e4c6b1-c508-47c3-8671-5301de49e5be') {
-                        sh 'docker compose -f docker-compose.yml build -t myapp'
+                        sh 'docker build -t myapp .'
                     }
                 }
                 
@@ -42,7 +42,7 @@ stage('Build Docker Images') {
                 // Utilisation de Docker Compose pour pousser les images vers Docker Hub
                 script {
                     withDockerRegistry(credentialsId: '04e4c6b1-c508-47c3-8671-5301de49e5be') {
-                        sh 'docker compose -f docker-compose.yml push myapp'
+                        sh 'docker push myapp'
                     }
                 }
 
