@@ -1,5 +1,10 @@
 pipeline {
-  agent any
+  agent {
+    docker {
+      image 'maven:3.9.5-openjdk-21'  // Utiliser une image Docker Maven
+      args '-v /root/.m2:/root/.m2'  // Optionnel: monter le cache Maven
+    }
+  }
 
   stages {
     stage('Cloner Backend') {
@@ -57,6 +62,9 @@ pipeline {
     stage('Deploy') {
       steps {
         echo 'Démarrage du déploiement des images Docker...'
+        
+        // Déplacer le fichier docker-compose.yml depuis le dépôt backend
+        sh 'cp docker-compose.yml ../'
         
         // Lancer les services avec Docker Compose
         sh 'docker-compose up -d'
