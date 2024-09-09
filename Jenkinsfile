@@ -82,8 +82,6 @@ pipeline {
                   sh 'docker push'
               }
           }
-        // Lancer les services avec Docker Compose
-        sh 'docker-compose up -d'
         
         echo 'Déploiement terminé avec succès.'
       }
