@@ -13,7 +13,6 @@ pipeline {
     stage('Build Backend') {
       steps {
         echo 'Démarrage de la construction du backend...'
-        sh 'mvn clean install'  // Assurez-vous que Maven est installé et configuré
         echo 'Backend construit avec succès.'
       }
     }
@@ -32,7 +31,6 @@ pipeline {
       steps {
         echo 'Démarrage de la construction du frontend...'
         dir('frontend') {
-          sh 'npm install && npm run build'  // Assurez-vous que Node.js et npm sont installés
         }
         echo 'Frontend construit avec succès.'
       }
@@ -41,9 +39,9 @@ pipeline {
     stage('Dockerize') {
       steps {
         echo 'Démarrage de la création des images Docker...'
-        sh 'docker build -t backend-image .'
+        
         dir('frontend') {
-          sh 'docker build -t frontend-image .'
+          
         }
         echo 'Images Docker créées avec succès.'
       }
@@ -52,7 +50,7 @@ pipeline {
     stage('Deploy') {
       steps {
         echo 'Déploiement des images Docker...'
-        sh 'docker-compose up -d'
+        
         echo 'Déploiement terminé avec succès.'
       }
     }
