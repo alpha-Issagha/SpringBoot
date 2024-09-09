@@ -27,7 +27,7 @@ stage('Build Docker Images') {
                 // Utilisation de Docker Compose pour build les images
                 script {
                     withDockerRegistry(credentialsId: '04e4c6b1-c508-47c3-8671-5301de49e5be') {
-                        sh 'docker build -t alphascopic/myapp:tag11 .'
+                        sh 'docker build -t alphascopic/myapp:tag12 .'
                     }
                 }
                 
