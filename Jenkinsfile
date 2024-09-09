@@ -25,7 +25,7 @@ pipeline {
                 echo 'Démarrage de la création des images Docker et du déploiement...'
                 
                 // Utilisation de Docker Compose pour build et deploy
-                sh 'docker-compose -f docker-compose.yml up --build -d'
+                sh 'docker compose -f docker-compose.yml up --build -d'
                 
                 echo 'Déploiement terminé avec succès.'
             }
