@@ -28,8 +28,13 @@ public class StudentConfig {
                     "mamadou@gmail.com",
                     LocalDate.of(1997, JANUARY,18)
             );
+            Student alphaa = new Student(
+                    "Souleymane ",
+                    "soul@gmail.com",
+                    LocalDate.of(1995, JANUARY,18)
+            );
             repository.saveAll(
-                    List.of (mariam,alpha)
+                    List.of (mariam,alpha,alphaa)
             );
         };
    }
