@@ -1,6 +1,9 @@
 pipeline {
     agent any
 
+    triggers {
+        githubPush()
+    }
     environment {
         DOCKER_REGISTRY_CREDENTIALS = '04e4c6b1-c508-47c3-8671-5301de49e5be'
         DOCKER_IMAGE_BACKEND = 'alphascopic/myapp:backend'
