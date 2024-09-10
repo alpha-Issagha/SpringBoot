@@ -1,6 +1,12 @@
 pipeline {
     agent any
 
+    environment {
+        DOCKER_REGISTRY_CREDENTIALS = '04e4c6b1-c508-47c3-8671-5301de49e5be'
+        DOCKER_IMAGE_BACKEND = 'alphascopic/myapp:backend'
+        DOCKER_IMAGE_FRONTEND = 'alphascopic/myapp:frontend'
+    }
+
     stages {
         stage('Cloner Backend') {
             steps {
@@ -20,18 +26,18 @@ pipeline {
             }
         }
 
-stage('Build Docker Images') {
+        stage('Build Docker Images') {
             steps {
                 echo 'Démarrage de la construction des images Docker...'
 
-                // Utilisation de Docker Compose pour build les images
+                // Construire les images Docker
                 script {
-                    withDockerRegistry(credentialsId: '04e4c6b1-c508-47c3-8671-5301de49e5be') {
-                        sh 'docker build -t alphascopic/myapp:backend .'
-                        sh 'docker build -t alphascopic/myapp:frontend ./frontend'
+                    withDockerRegistry(credentialsId: "${DOCKER_REGISTRY_CREDENTIALS}") {
+                        sh 'docker build -t ${DOCKER_IMAGE_BACKEND} .'
+                        sh 'docker build -t ${DOCKER_IMAGE_FRONTEND} ./frontend'
                     }
                 }
-                
+
                 echo 'Images Docker construites avec succès.'
             }
         }
@@ -40,11 +46,11 @@ stage('Build Docker Images') {
             steps {
                 echo 'Démarrage du push des images Docker...'
 
-                // Utilisation de Docker Compose pour pousser les images vers Docker Hub
+                // Pousser les images Docker vers Docker Hub
                 script {
-                    withDockerRegistry(credentialsId: '04e4c6b1-c508-47c3-8671-5301de49e5be') {
-                        sh 'docker push alphascopic/myapp:backend'
-                        sh 'docker push alphascopic/myapp:frontend'
+                    withDockerRegistry(credentialsId: "${DOCKER_REGISTRY_CREDENTIALS}") {
+                        sh 'docker push ${DOCKER_IMAGE_BACKEND}'
+                        sh 'docker push ${DOCKER_IMAGE_FRONTEND}'
                     }
                 }
 
