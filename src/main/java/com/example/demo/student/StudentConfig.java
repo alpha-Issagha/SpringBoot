@@ -29,7 +29,7 @@ public class StudentConfig {
                     LocalDate.of(1997, JANUARY,18)
             );
             Student alphaa = new Student(
-                    "Souleymane ",
+                    "Souleymane  ",
                     "soul@gmail.com",
                     LocalDate.of(1995, JANUARY,18)
             );
